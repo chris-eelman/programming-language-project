@@ -2,7 +2,7 @@
 
 Written in: Python
 
-## Desired Syntax
+## Syntax
 
 * True: `nocap`
 * False: `cap`
@@ -17,10 +17,12 @@ Written in: Python
 * Char: `rizzler`
 * Int: `fortnite`
 * Double: `dubs`
-* Print/return: `<` print statement `/>`
+* Print/return: `<>` "print statement here" + var `</>`
 * To end a line: `<3`
+* ‘==’  `valid`
+* != `sus`
 * Quote: `:(` quote `):`
-* Single-line comment: `Yur`
+* Single-line comment: `yur`
 * Multi-line comment: `yurrr yurrr`
 * If: `bussIf`
 * Else: `bussEls`
@@ -33,13 +35,39 @@ Written in: Python
 * Slay: `slay()` - adds '👑💅💁‍♀️' to any string
 * Rahh: `rahh()` - adds '🦅🇺🇸🤠' to any string
 * Let him cook: `lethimcook()` - adds '🗣👨‍🍳🍲' to any string
-* Spongebob: `spongebob()` - 'dGhDgDg'
+* Spongebob: `spongebob()` - 'MaKeS TeXt LoOk LiKe ThIs'
 
 ## Demo Code
 
-```python
+```
 fortnite a = 7 <3
 dubs b = 5.0 <3
-< a valid b > <3
-yur returns cap
-toSlay is_equal: bussif a valid b: < Numbers are equal. /> <3 busselse: < Numbers are not equal. /> <3
+
+worrrd d = 'our language is:' <3
+rizzler c = 'Z' <3
+
+
+bussIf (a sus b) {
+    forReal(fortnite i = 0; i < 10; i++) {
+        <>"Hello there " + i </> <3
+    }
+} bussElse {
+    <> d + c </> yurrr prints "our language is Z"
+}
+
+yurrr
+    multi
+    line
+    comment
+yurrr
+
+yur heres a single line comment <3
+
+<>a.unoReverse()</> <3
+<>a.getClapped()</> <3
+<>d.slang()</> <3
+<>d.slay()</> <3
+```
+
+
+Chris, Caleb, Laina, Jake
