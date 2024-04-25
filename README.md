@@ -1,5 +1,5 @@
 # Z# Language
-<img width="456" alt="Screenshot 2024-04-25 at 2 36 39 PM" src="https://github.com/chris-eelman/programming-language-project/assets/78044530/e07df180-c1ba-4c41-a62d-695f7073e057">
+<img width="216" alt="Screenshot 2024-04-25 at 2 36 39 PM" src="https://github.com/chris-eelman/programming-language-project/assets/78044530/25ad94a6-d5d5-41b7-ab9c-6b879db2f3ee">
 
 
 Written in: Python
