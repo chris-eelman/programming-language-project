@@ -17,6 +17,8 @@ class Type(Enum):
     EOC = "ENDOFCOMMAND"
     EQUALS = "EQUALS"
     NUMBER = "NUMBER"
+    COMPARE = "COMPARE"
+    BOOLEAN = "BOOLEAN"
 
 
 class Lexer:
@@ -66,12 +68,35 @@ class Lexer:
 
 
         for token in self.i:
+            # OPERATOR
             if re.fullmatch(z_add, token):
                 self.out.append({"Type": Type.OPERATOR, "value": token})
             elif re.fullmatch(z_digits, token):
                 self.out.append({"Type": Type.NUMBER, "value": token})
             elif re.fullmatch(z_sub, token):
                 self.out.append({"Type": Type.OPERATOR, "value": token})
+            elif re.fullmatch(z_multiply, token):
+                self.out.append({"Type": Type.OPERATOR, "value": token})
+            elif re.fullmatch(z_divide, token):
+                self.out.append({"Type": Type.OPERATOR, "value": token})
+            # COMPARE
+            elif re.fullmatch(z_valid, token):
+                self.out.append({"Type": Type.COMPARE, "value": token})
+            elif re.fullmatch(z_sus, token):
+                self.out.append({"Type": Type.COMPARE, "value": token})
+            elif re.fullmatch(z_great, token):
+                self.out.append({"Type": Type.COMPARE, "value": token})
+            elif re.fullmatch(z_less, token):
+                self.out.append({"Type": Type.COMPARE, "value": token})
+            # NUMBER
+            elif re.fullmatch(z_digits, token):
+                self.out.append({"Type": Type.NUMBER, "value": token})
+
+
+
+            # This is how You check for full words - start with going through and doing all these
+            elif token == "nocap":  # Check for the word "nocap"
+                self.out.append({"Type": Type.BOOLEAN, "value": token})  # Create a token for it
 
         return self.out
 
@@ -169,7 +194,7 @@ with open("test.genz", "r") as file:
 ################################################################
 # Check for Puddle file type, and run on command line
 if len(sys.argv) > 1:
-    if not sys.argv[1].endswith('.pud'):
+    if not sys.argv[1].endswith('.genz'):
         print("Error: The file is not a genZ file.")
         sys.exit()
 
@@ -199,7 +224,7 @@ ast = Parser(tokens).parse()
 
 if debug:
     print("\n--------AST--------")
-    print(ast)
+    pretty_print_ast(ast)
 
 result = Interpreter().evaluate_ast(ast)
 
