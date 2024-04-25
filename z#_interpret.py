@@ -28,6 +28,16 @@ class Lexer:
         # patterns to check
         z_add = r'\+'
         z_sub = r'\-'
+        z_multi = r'\*'
+        z_div = r'\/'
+
+        z_valid = r'\valid'
+        z_sus = r'\sus'
+        z_great = r'\>'
+        z_less = r'\<'
+
+        z_equal = r'\='
+
         z_digits = r'^\d+$'
 
         for token in self.i:
