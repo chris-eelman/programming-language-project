@@ -12,13 +12,28 @@ Some additional thoughts:
 
 
 class Type(Enum):
-    IDENTIFIER = "IDENTIFIER"
     OPERATOR = "OPERATOR"
-    EOC = "ENDOFCOMMAND"
     EQUALS = "EQUALS"
     NUMBER = "NUMBER"
     COMPARE = "COMPARE"
     BOOLEAN = "BOOLEAN"
+    NULL = "NULL"
+    FORLOOP = "FORLOOP"
+    VARIABLE = "VARIABLE"
+    PRIVATE = "PRIVATE"
+    PUBLIC = "PUBLIC"
+    END = "END"
+    FUNCTION = "FUNCTION"
+    CHAR = "CHAR"
+    INT = "INT"
+    DOUBLE = "DOUBLE"
+    # PRINT + RETURN
+    ENDLINE = "ENDLINE"
+    # QUOTE
+    # SINGLE LINE COMMENT
+    # MULTI LINE COMMENT
+    IF = "IF"
+    ELSE = "ELSE"
 
 
 class Lexer:
@@ -71,29 +86,79 @@ class Lexer:
             # OPERATOR
             if re.fullmatch(z_add, token):
                 self.out.append({"Type": Type.OPERATOR, "value": token})
-            elif re.fullmatch(z_digits, token):
-                self.out.append({"Type": Type.NUMBER, "value": token})
             elif re.fullmatch(z_sub, token):
                 self.out.append({"Type": Type.OPERATOR, "value": token})
-            elif re.fullmatch(z_multiply, token):
+            elif re.fullmatch(z_multi, token):
                 self.out.append({"Type": Type.OPERATOR, "value": token})
-            elif re.fullmatch(z_divide, token):
+            elif re.fullmatch(z_div, token):
                 self.out.append({"Type": Type.OPERATOR, "value": token})
             # COMPARE
-            elif re.fullmatch(z_valid, token):
-                self.out.append({"Type": Type.COMPARE, "value": token})
-            elif re.fullmatch(z_sus, token):
-                self.out.append({"Type": Type.COMPARE, "value": token})
+            elif token == "valid":  # Check for the word "valid"
+                self.out.append({"Type": Type.COMPARE, "value": token})  # Create a token for it
+            elif token == "sus":  # Check for the word "sus"
+                self.out.append({"Type": Type.COMPARE, "value": token})  # Create a token for it
             elif re.fullmatch(z_great, token):
                 self.out.append({"Type": Type.COMPARE, "value": token})
             elif re.fullmatch(z_less, token):
                 self.out.append({"Type": Type.COMPARE, "value": token})
+            elif re.fullmatch(z_equal, token):
+                self.out.append({"Type": Type.COMPARE, "value": token})
             # NUMBER
             elif re.fullmatch(z_digits, token):
                 self.out.append({"Type": Type.NUMBER, "value": token})
+            # BOOLEAN
+            elif token == "nocap":  # Check for the word "nocap"
+                self.out.append({"Type": Type.BOOLEAN, "value": token})  # Create a token for it
+            elif token == "cap":  # Check for the word "cap"
+                self.out.append({"Type": Type.BOOLEAN, "value": token})  # Create a token for it
+            # NULL
+            elif token == "bruh":  # Check for the word "bruh"
+                self.out.append({"Type": Type.NULL, "value": token})  # Create a token for it
+            # FORLOOP
+            elif token == "forreal":  # Check for the word "forreal"
+                self.out.append({"Type": Type.FORLOOP, "value": token})  # Create a token for it
+            # VARIABLE
+            elif token == "jawn":  # Check for the word "jawn"
+                self.out.append({"Type": Type.VARIABLE, "value": token})  # Create a token for it
+            # PRIVATE
+            elif token == "lowkey":  # Check for the word "lowkey"
+                self.out.append({"Type": Type.PRIVATE, "value": token})  # Create a token for it
+            # PUBLIC
+            elif token == "highkey":  # Check for the word "highkey"
+                self.out.append({"Type": Type.PUBLIC, "value": token})  # Create a token for it
+            # END
+            elif token == "onPeriod":  # Check for the word "onPeriod"
+                self.out.append({"Type": Type.END, "value": token})  # Create a token for it
+            # FUNCTION
+            elif token == "toSlay":  # Check for the word "toSlay"
+                self.out.append({"Type": Type.FUNCTION, "value": token})  # Create a token for it
+            # STRING
+            elif token == "worrrd":  # Check for the word "worrrd"
+                self.out.append({"Type": Type.STRING, "value": token})  # Create a token for it
+            # CHAR
+            elif token == "rizzler":  # Check for the word "rizzler"
+                self.out.append({"Type": Type.CHAR, "value": token})  # Create a token for it
+            # INT
+            elif token == "fortnite":  # Check for the word "fortnite"
+                self.out.append({"Type": Type.INT, "value": token})  # Create a token for it
+            # DOUBLE
+            elif token == "dubs":  # Check for the word "dubs"
+                self.out.append({"Type": Type.DOUBLE, "value": token})  # Create a token for it
+            # PRINT + RETURN
+            # ENDLINE
+            elif re.fullmatch(z_endLine, token):
+                self.out.append({"Type": Type.ENDLINE, "value": token})
+            # QUOTE
+            # SINGLE LINE COMMENT
+            # MULTI LINE COMMENT
+            # IF
+            elif token == "bussIf":  # Check for the word "bussIf"
+                self.out.append({"Type": Type.IF, "value": token})  # Create a token for it
+            # ELSE
+            elif token == "bussEls":  # Check for the word "bussEls"
+                self.out.append({"Type": Type.ELSE, "value": token})  # Create a token for it
 
-
-
+            # Example for token keyword search:
             # This is how You check for full words - start with going through and doing all these
             elif token == "nocap":  # Check for the word "nocap"
                 self.out.append({"Type": Type.BOOLEAN, "value": token})  # Create a token for it
