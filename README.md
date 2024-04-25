@@ -46,14 +46,17 @@ dubs b = 5.0 <3
 worrrd d = 'our language is:' <3
 rizzler c = 'Z' <3
 
-
-bussIf (a sus b) {
-    forReal(fortnite i = 0; i < 10; i++) {
-        <>"Hello there " + i </> <3
+toSlay function_name (a, b) {
+    bussIf (a sus b) {
+        forReal(fortnite i = 0; i < 10; i++) {
+            <>"Hello there " + i </> <3
+        }
+    } bussElse {
+        <> d + c </> yurrr prints "our language is Z"
     }
-} bussElse {
-    <> d + c </> yurrr prints "our language is Z"
 }
+
+function_name (a , b) 
 
 yurrr
     multi
