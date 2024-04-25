@@ -24,6 +24,7 @@ class Type(Enum):
     PUBLIC = "PUBLIC"
     END = "END"
     FUNCTION = "FUNCTION"
+    STRING = "STRING"
     CHAR = "CHAR"
     INT = "INT"
     DOUBLE = "DOUBLE"
