@@ -40,6 +40,31 @@ class Lexer:
 
         z_digits = r'^\d+$'
 
+        z_nocap = r'\nocap\b'
+        z_cap = r'\cap\b'
+        z_bruh = r'\bruh\b'
+        z_forreal = r'\forreal\b'
+        z_jawn = r'\jawn\b'
+        z_lowkey = r'\lowkey\b'
+        z_highkey = r'\highkey\b'
+        z_onPeriod = r'\onPeriod\b'
+        z_toSlay = r'\toSlay\b'
+        z_worrrd = r'\worrrd\b'
+        z_rizzler = r'\rizzler\b'
+        z_fortnite = r'\fortnite\b'
+        z_dubs = r'\dubs\b'
+        z_startPrint = r'<>'
+        z_endPrint = r'<\/\>'
+        z_endLine = r'<3'
+        z_startQuote = r':\('
+        z_endQuote = r'\):'
+        z_singleCom = r'\yur\b'
+        z_multiCom = r'\yurrr\b'
+        z_if = r'\bussIf\b'
+        z_else = r'\bussElse\b'
+
+
+
         for token in self.i:
             if re.fullmatch(z_add, token):
                 self.out.append({"Type": Type.OPERATOR, "value": token})
