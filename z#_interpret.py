@@ -17,6 +17,8 @@ class Type(Enum):
     EOC = "ENDOFCOMMAND"
     EQUALS = "EQUALS"
     NUMBER = "NUMBER"
+    COMPARE = "COMPARE"
+    BOOLEAN = "BOOLEAN"
 
 
 class Lexer:
@@ -31,12 +33,27 @@ class Lexer:
         z_digits = r'^\d+$'
 
         for token in self.i:
+            # OPERATOR
             if re.fullmatch(z_add, token):
                 self.out.append({"Type": Type.OPERATOR, "value": token})
-            elif re.fullmatch(z_digits, token):
-                self.out.append({"Type": Type.NUMBER, "value": token})
             elif re.fullmatch(z_sub, token):
                 self.out.append({"Type": Type.OPERATOR, "value": token})
+            elif re.fullmatch(z_multiply, token):
+                self.out.append({"Type": Type.OPERATOR, "value": token})
+            elif re.fullmatch(z_divide, token):
+                self.out.append({"Type": Type.OPERATOR, "value": token})
+            # COMPARE
+            elif re.fullmatch(z_valid, token):
+                self.out.append({"Type": Type.COMPARE, "value": token})
+            elif re.fullmatch(z_sus, token):
+                self.out.append({"Type": Type.COMPARE, "value": token})
+            elif re.fullmatch(z_great, token):
+                self.out.append({"Type": Type.COMPARE, "value": token})
+            elif re.fullmatch(z_less, token):
+                self.out.append({"Type": Type.COMPARE, "value": token})
+            # NUMBER
+            elif re.fullmatch(z_digits, token):
+                self.out.append({"Type": Type.NUMBER, "value": token})
 
         return self.out
 
