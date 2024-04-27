@@ -74,3 +74,50 @@ yur heres a single line comment <3
 <>d.slang()</> <3
 <>d.slay()</> <3
 ```
+
+Language Grammar Definition:
+
+```
+PROGRAM ::= STATEMENT*
+
+STATEMENT ::= VARIABLE_DECLARATION
+            | FUNCTION_DECLARATION
+            | FUNCTION_CALL
+            | PRINT_STATEMENT
+            | COMMENT
+
+VARIABLE_DECLARATION ::= TYPE IDENTIFIER '=' EXPRESSION '<3'
+
+TYPE ::= 'fortnite' | 'dubs' | 'worrrd' | 'rizzler'
+
+IDENTIFIER ::= [a-zA-Z_][a-zA-Z_0-9]*
+
+EXPRESSION ::= TERM ((ADD | SUB) TERM)*
+
+TERM ::= FACTOR ((MUL | DIV) FACTOR)*
+
+FACTOR ::= NUMBER | IDENTIFIER
+
+NUMBER ::= [0-9]+ | [0-9]+ '.' [0-9]+
+
+ADD ::= '+'
+SUB ::= '-'
+MUL ::= '*'
+DIV ::= '/'
+
+FUNCTION_DECLARATION ::= 'toSlay' IDENTIFIER '(' PARAMETER_LIST ')' BLOCK
+
+PARAMETER_LIST ::= IDENTIFIER (',' IDENTIFIER)*
+
+BLOCK ::= '{' STATEMENT* '}'
+
+FUNCTION_CALL ::= IDENTIFIER '(' EXPRESSION (',' EXPRESSION)* ')'
+
+PRINT_STATEMENT ::= '<>' EXPRESSION '</>' '<3'
+
+COMMENT ::= 'yur' | 'yurrr' COMMENT_BODY
+
+COMMENT_BODY ::= [^<3]* '<3' | [^yurrr]* 'yurrr'
+
+BLOCK_COMMENT ::= 'yurrr' COMMENT_BODY 'yurrr'
+```
