@@ -12,7 +12,10 @@ Some additional thoughts:
 
 
 class Type(Enum):
+    STRING = "STRING"
+    IDENTIFIER = "IDENTIFIER"
     OPERATOR = "OPERATOR"
+    EOC = "ENDOFCOMMAND"
     EQUALS = "EQUALS"
     NUMBER = "NUMBER"
     COMPARE = "COMPARE"
@@ -24,148 +27,79 @@ class Type(Enum):
     PUBLIC = "PUBLIC"
     END = "END"
     FUNCTION = "FUNCTION"
-    STRING = "STRING"
     CHAR = "CHAR"
     INT = "INT"
     DOUBLE = "DOUBLE"
-    # PRINT + RETURN
     ENDLINE = "ENDLINE"
-    # QUOTE
-    # SINGLE LINE COMMENT
-    # MULTI LINE COMMENT
+    MULTICOM = "MULTICOM"
+    SINGLECOM = "SINGLECOM"
+    ENDPRINT = "ENDPRINT"
+    STARTPRINT = "STARTPRINT"
+    ENDQUOTE = "ENDQUOTE"
+    STARTQUOTE = "STARTQUOTE"
     IF = "IF"
     ELSE = "ELSE"
-
+    RIGHT_PAREN = "RIGHT_PAREN"
+    COMMA = "COMMA"
 
 class Lexer:
-    def __init__(self, i):
-        self.i = i.split()
-        self.out = []
+    def __init__(self, input_string):
+        self.input_string = input_string
+        self.tokens = []
 
     def lex(self):
-        # patterns to check
-        z_add = r'\+'
-        z_sub = r'\-'
-        z_multi = r'\*'
-        z_div = r'\/'
+        TOKEN_TYPES = {
+            r'\+': Type.OPERATOR,
+            r'-': Type.OPERATOR,
+            r'\*': Type.OPERATOR,
+            r'/': Type.OPERATOR,
+            r'=': Type.EQUALS,
+            r'>': Type.COMPARE,
+            r'<': Type.COMPARE,
+            r'\d+': Type.NUMBER,
+            r'[a-zA-Z_][a-zA-Z_0-9]*': Type.IDENTIFIER,
+            r'<3': Type.ENDLINE,
+            r':\((': Type.STARTQUOTE,
+            r'\):': Type.ENDQUOTE,
+            r'\<>': Type.STARTPRINT,
+            r'\<\/\>': Type.ENDPRINT,
+            r'\yur\b': Type.SINGLECOM,
+            r'\yurrr\b': Type.MULTICOM,
+            r'\)': Type.RIGHT_PAREN,
+            r',': Type.COMMA,
+        }
 
-        z_valid = r'\valid'
-        z_sus = r'\sus'
-        z_great = r'\>'
-        z_less = r'\<'
+        KEYWORDS = {
+            'valid': Type.COMPARE,
+            'sus': Type.COMPARE,
+            'nocap': Type.BOOLEAN,
+            'cap': Type.BOOLEAN,
+            'bruh': Type.NULL,
+            'forreal': Type.FORLOOP,
+            'jawn': Type.VARIABLE,
+            'lowkey': Type.PRIVATE,
+            'highkey': Type.PUBLIC,
+            'onPeriod': Type.END,
+            'toSlay': Type.FUNCTION,
+            'worrrd': Type.STRING,
+            'rizzler': Type.CHAR,
+            'fortnite': Type.INT,
+            'dubs': Type.DOUBLE,
+            'bussIf': Type.IF,
+            'bussElse': Type.ELSE,
+        }
 
-        z_equal = r'\='
-
-        z_digits = r'^\d+$'
-
-        z_nocap = r'\nocap\b'
-        z_cap = r'\cap\b'
-        z_bruh = r'\bruh\b'
-        z_forreal = r'\forreal\b'
-        z_jawn = r'\jawn\b'
-        z_lowkey = r'\lowkey\b'
-        z_highkey = r'\highkey\b'
-        z_onPeriod = r'\onPeriod\b'
-        z_toSlay = r'\toSlay\b'
-        z_worrrd = r'\worrrd\b'
-        z_rizzler = r'\rizzler\b'
-        z_fortnite = r'\fortnite\b'
-        z_dubs = r'\dubs\b'
-        z_startPrint = r'<>'
-        z_endPrint = r'<\/\>'
-        z_endLine = r'<3'
-        z_startQuote = r':\('
-        z_endQuote = r'\):'
-        z_singleCom = r'\yur\b'
-        z_multiCom = r'\yurrr\b'
-        z_if = r'\bussIf\b'
-        z_else = r'\bussElse\b'
-
-
-
-        for token in self.i:
-            # OPERATOR
-            if re.fullmatch(z_add, token):
-                self.out.append({"Type": Type.OPERATOR, "value": token})
-            elif re.fullmatch(z_sub, token):
-                self.out.append({"Type": Type.OPERATOR, "value": token})
-            elif re.fullmatch(z_multi, token):
-                self.out.append({"Type": Type.OPERATOR, "value": token})
-            elif re.fullmatch(z_div, token):
-                self.out.append({"Type": Type.OPERATOR, "value": token})
-            # COMPARE
-            elif token == "valid":  # Check for the word "valid"
-                self.out.append({"Type": Type.COMPARE, "value": token})  # Create a token for it
-            elif token == "sus":  # Check for the word "sus"
-                self.out.append({"Type": Type.COMPARE, "value": token})  # Create a token for it
-            elif re.fullmatch(z_great, token):
-                self.out.append({"Type": Type.COMPARE, "value": token})
-            elif re.fullmatch(z_less, token):
-                self.out.append({"Type": Type.COMPARE, "value": token})
-            elif re.fullmatch(z_equal, token):
-                self.out.append({"Type": Type.COMPARE, "value": token})
-            # NUMBER
-            elif re.fullmatch(z_digits, token):
-                self.out.append({"Type": Type.NUMBER, "value": token})
-            # BOOLEAN
-            elif token == "nocap":  # Check for the word "nocap"
-                self.out.append({"Type": Type.BOOLEAN, "value": token})  # Create a token for it
-            elif token == "cap":  # Check for the word "cap"
-                self.out.append({"Type": Type.BOOLEAN, "value": token})  # Create a token for it
-            # NULL
-            elif token == "bruh":  # Check for the word "bruh"
-                self.out.append({"Type": Type.NULL, "value": token})  # Create a token for it
-            # FORLOOP
-            elif token == "forreal":  # Check for the word "forreal"
-                self.out.append({"Type": Type.FORLOOP, "value": token})  # Create a token for it
-            # VARIABLE
-            elif token == "jawn":  # Check for the word "jawn"
-                self.out.append({"Type": Type.VARIABLE, "value": token})  # Create a token for it
-            # PRIVATE
-            elif token == "lowkey":  # Check for the word "lowkey"
-                self.out.append({"Type": Type.PRIVATE, "value": token})  # Create a token for it
-            # PUBLIC
-            elif token == "highkey":  # Check for the word "highkey"
-                self.out.append({"Type": Type.PUBLIC, "value": token})  # Create a token for it
-            # END
-            elif token == "onPeriod":  # Check for the word "onPeriod"
-                self.out.append({"Type": Type.END, "value": token})  # Create a token for it
-            # FUNCTION
-            elif token == "toSlay":  # Check for the word "toSlay"
-                self.out.append({"Type": Type.FUNCTION, "value": token})  # Create a token for it
-            # STRING
-            elif token == "worrrd":  # Check for the word "worrrd"
-                self.out.append({"Type": Type.STRING, "value": token})  # Create a token for it
-            # CHAR
-            elif token == "rizzler":  # Check for the word "rizzler"
-                self.out.append({"Type": Type.CHAR, "value": token})  # Create a token for it
-            # INT
-            elif token == "fortnite":  # Check for the word "fortnite"
-                self.out.append({"Type": Type.INT, "value": token})  # Create a token for it
-            # DOUBLE
-            elif token == "dubs":  # Check for the word "dubs"
-                self.out.append({"Type": Type.DOUBLE, "value": token})  # Create a token for it
-            # PRINT + RETURN
-            # ENDLINE
-            elif re.fullmatch(z_endLine, token):
-                self.out.append({"Type": Type.ENDLINE, "value": token})
-            # QUOTE
-            # SINGLE LINE COMMENT
-            # MULTI LINE COMMENT
-            # IF
-            elif token == "bussIf":  # Check for the word "bussIf"
-                self.out.append({"Type": Type.IF, "value": token})  # Create a token for it
-            # ELSE
-            elif token == "bussEls":  # Check for the word "bussEls"
-                self.out.append({"Type": Type.ELSE, "value": token})  # Create a token for it
-
-            # Example for token keyword search:
-            # This is how You check for full words - start with going through and doing all these
-            elif token == "nocap":  # Check for the word "nocap"
-                self.out.append({"Type": Type.BOOLEAN, "value": token})  # Create a token for it
-
-        return self.out
-
+        for token in self.input_string.split():
+            if token in KEYWORDS:
+                self.tokens.append({'Type': KEYWORDS[token], 'value': token})
+            else:
+                for pattern, token_type in TOKEN_TYPES.items():
+                    if re.fullmatch(pattern, token):
+                        self.tokens.append({'Type': token_type, 'value': token})
+                        break
+                else:
+                    raise ValueError(f"Unknown token: {token}")
+        return self.tokens
 
 class Parser:
     def __init__(self, tokens):
@@ -174,52 +108,170 @@ class Parser:
         self.current_token = next(self.it, None)
 
     def next_token(self):
-        """ Advances to the next token, if available. """
         self.current_token = next(self.it, None)
 
-    def parse(self):
-        '''
-        BEFORE you build the AST, check that the command is
-        a valid grammar.
-        '''
-
-        """ Parses the tokens into an AST based on simple arithmetic rules. """
-        if not self.current_token:
-            return None  # Early exit if there are no tokens
-
-        # Start with the first literal
-        left = {'Type': 'Literal', 'value': self.current_token['value']}
-        self.next_token()
-
-        # Process as long as there are tokens and the current token is an operator
-        while self.current_token and self.current_token['Type'] == Type.OPERATOR:
-            operator = self.current_token['value']
+    def parse_program(self):
+        statements = []
+        while self.current_token:
+            statement = self.parse_statement()
+            if statement:
+                statements.append(statement)
             self.next_token()
-            if not self.current_token or self.current_token['Type'] != Type.NUMBER:
-                raise ValueError("Expected a number after operator")
+        return statements
 
-            right = {'Type': 'Literal', 'value': self.current_token['value']}
+    def parse_statement(self):
+        if (self.current_token['Type'] == Type.INT) or (self.current_token['Type'] == Type.DOUBLE):
+            return self.parse_var_declaration()
+        elif self.current_token['Type'] == Type.IDENTIFIER:
+            return self.parse_function_call()
+        elif self.current_token['Type'] == Type.STARTPRINT:
+            return self.parse_print_statement()
+        elif self.current_token['Type'] == Type.SINGLECOM:
+            self.parse_comment()
+            return None
+        else:
+            raise ValueError("Unexpected token")
+
+    def parse_var_declaration(self):
+        type_token = self.current_token
+        self.next_token()
+        if type_token['value'] == 'fortnite':
+            type_token['value'] = 'INT'
+        if type_token['value'] == 'dubs':
+            type_token['value'] = 'DOUBLE'
+        identifier_token = self.current_token
+        self.next_token()
+        if self.current_token['Type'] == Type.EQUALS:
+            self.next_token()
+            expression = self.parse_expression()
+            if not expression:
+                raise ValueError("Expected expression after equals")
+            return {
+                'Type': 'VariableDeclaration',
+                'type': type_token['value'],
+                'identifier': identifier_token['value'],
+                'expression': expression
+            }
+        else:
+            return {
+                'Type': 'VariableDeclaration',
+                'type': type_token['value'],
+                'identifier': identifier_token['value'],
+                'expression': None
+            }
+
+    def parse_function_call(self):
+        identifier_token = self.current_token.next_token()
+        left_paren_token = self.current_token
+        self.next_token()
+        arguments = self.parse_arguments()
+        right_paren_token = self.current_token
+        self.next_token()
+        return {
+            'Type': 'FunctionCall',
+            'identifier': identifier_token['value'],
+            'arguments': arguments
+        }
+
+    def parse_print_statement(self):
+        print_token = self.current_token
+        self.next_token()
+        expression = self.parse_expression()
+        if not expression:
+            raise ValueError("Expected expression after print")
+        return {
+            'Type': 'PrintStatement',
+            'expression': expression
+        }
+
+    def parse_comment(self):
+        comment_token = self.current_token
+        self.next_token()
+        while self.current_token and self.current_token['Type'] == Type.SINGLECOM:
+            self.next_token()
+
+    def parse_expression(self):
+        left = self.parse_term()
+        while self.current_token and self.current_token['Type'] in (Type.OPERATOR, Type.EQUALS):
+            operator_token = self.current_token
+            self.next_token()
+            right = self.parse_term()
             left = {
                 'Type': 'BinaryOperation',
-                'operator': operator,
+                'operator': operator_token['value'],
                 'left': left,
                 'right': right
             }
-            self.next_token()
-
         return left
 
+    def parse_term(self):
+        if self.current_token['Type'] == Type.NUMBER:
+            return {
+                'Type': 'Literal',
+                'value': self.current_token['value']
+            }
+        elif self.current_token['Type'] == Type.IDENTIFIER:
+            return {
+                'Type': 'Identifier',
+                'value': self.current_token['value']
+            }
+        elif self.current_token['Type'] == Type.STARTQUOTE:
+            return self.parse_string()
+        else:
+            raise ValueError("Unexpected token")
 
-def pretty_print_ast(ast, indent=0):
+    def parse_string(self):
+        start_quote_token = self.current_token
+        self.next_token()
+        value = ""
+        while self.current_token and self.current_token['Type'] != Type.ENDQUOTE:
+            value += self.current_token['value']
+            self.next_token()
+        end_quote_token = self.current_token
+        self.next_token()
+        return {
+            'Type': 'String',
+            'value': value
+        }
+
+    def parse_arguments(self):
+        arguments = []
+        while self.current_token and self.current_token['Type'] != Type.RIGHT_PAREN:
+            expression = self.parse_expression()
+            if not expression:
+                raise ValueError("Expected expression as argument")
+            arguments.append(expression)
+            if self.current_token and self.current_token['Type'] == Type.COMMA:
+                self.next_token()
+        return arguments
+
+    def parse(self):
+        return self.parse_program()
+
+def pretty_print_ast(ast_list, indent=0):
     """ Recursively prints the AST in a human-readable format with indentation. """
-    if ast['Type'] == 'Literal':
-        print(' ' * indent + f"Literal({ast['value']})")
-    elif ast['Type'] == 'BinaryOperation':
-        print(' ' * indent + f"BinaryOperation({ast['operator']})")
-        print(' ' * indent + '├─ left:')
-        pretty_print_ast(ast['left'], indent + 4)
-        print(' ' * indent + '└─ right:')
-        pretty_print_ast(ast['right'], indent + 4)
+    for ast in ast_list:
+        if ast['Type'] == 'Literal':
+            print(' ' * indent + f"Literal({ast['value']})")
+        elif ast['Type'] == 'BinaryOperation':
+            print(' ' * indent + f"BinaryOperation({ast['operator']})")
+            print(' ' * indent + '├─ left:')
+            pretty_print_ast(ast['left'], indent + 4)
+            print(' ' * indent + '└─ right:')
+            pretty_print_ast(ast['right'], indent + 4)
+        elif ast['Type'] == 'VariableDeclaration':
+            print(' ' * indent + f"VariableDeclaration({ast['type']})")
+            print(' ' * indent + '├─ identifier:')
+            print(' ' * (indent + 4) + f"{ast['identifier']}")
+            if 'expression' in ast and ast['expression']:
+                print(' ' * indent + '└─ expression:')
+                expression_ast = ast['expression']
+                if expression_ast['Type'] == 'Literal':
+                    print(' ' * (indent + 4) + f"Literal({expression_ast['value']})")
+                elif expression_ast['Type'] == 'Identifier':
+                    print(' ' * (indent + 4) + f"Identifier({expression_ast['identifier']})")
+                else:
+                    pretty_print_ast([ast['expression']], indent + 4)
 
 
 class Interpreter:
@@ -290,7 +342,8 @@ ast = Parser(tokens).parse()
 
 if debug:
     print("\n--------AST--------")
-    pretty_print_ast(ast)
+    print(ast)
+    pretty_print_ast(ast, 10)
 
 result = Interpreter().evaluate_ast(ast)
 
