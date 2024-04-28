@@ -278,9 +278,9 @@ class Interpreter:
     def __init__(self):
         self.variables = {}
 
-    def evaluate_program(self, program):
-        for ast in program:
-            self.evaluate_ast(ast)
+    # def evaluate_program(self, program):
+    #     for ast in program:
+    #         self.evaluate_ast(ast)
 
     def evaluate_ast(self, ast):
         """ Recursively evaluates the AST to compute the result of the expression. """
@@ -292,7 +292,7 @@ class Interpreter:
 
         elif ast['Type'] == 'VariableDeclaration':
             self.variables[ast['identifier']] = self.evaluate_ast(ast['expression']) if ast['expression'] else None
-            return
+            return self.variables[ast['identifier']]
 
         elif ast['Type'] == 'BinaryOperation':
             left_val = self.evaluate_ast(ast['left'])  # Recursively evaluate the left child
@@ -356,7 +356,8 @@ if debug:
     print(ast)
     pretty_print_ast(ast, 10)
 
-result = Interpreter().evaluate_program(ast)
+# result = Interpreter().evaluate_program(ast)
+result = Interpreter().evaluate_ast(ast)
 
 if debug:
     print("\n--------RESULT--------")
