@@ -278,9 +278,9 @@ class Interpreter:
     def __init__(self):
         self.variables = {}
 
-    # def evaluate_program(self, program):
-    #     for ast in program:
-    #         self.evaluate_ast(ast)
+    def evaluate_program(self, program):
+        for ast in program:
+            self.evaluate_ast(ast)
 
     def evaluate_ast(self, ast):
         """ Recursively evaluates the AST to compute the result of the expression. """
@@ -356,8 +356,7 @@ if debug:
     print(ast)
     pretty_print_ast(ast, 10)
 
-# result = Interpreter().evaluate_program(ast)
-result = Interpreter().evaluate_ast(ast)
+result = Interpreter().evaluate_program(ast)
 
 if debug:
     print("\n--------RESULT--------")
