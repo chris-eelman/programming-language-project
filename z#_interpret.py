@@ -276,12 +276,19 @@ def pretty_print_ast(ast_list, indent=0):
 
 class Interpreter:
     def __init__(self):
-        pass
+        self.variables = {}
 
     def evaluate_ast(self, ast):
         """ Recursively evaluates the AST to compute the result of the expression. """
         if ast['Type'] == 'Literal':
             return int(ast['value'])  # Convert the value to an integer and return it
+
+        elif ast['Type'] == 'Identifier':
+            return self.variables[ast['value']]
+
+        elif ast['Type'] == 'VariableDeclaration':
+            self.variables[ast['identifier']] = self.evaluate_ast(ast['expression']) if ast['expression'] else None
+            return
 
         elif ast['Type'] == 'BinaryOperation':
             left_val = self.evaluate_ast(ast['left'])  # Recursively evaluate the left child
