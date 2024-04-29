@@ -5,6 +5,12 @@ Written in: Python
 
 Group members: Chris Eelman, Caleb Rudloff, Laina Nguyen, Jake Gabriels
 
+## Language Overview
+Z# is a unique programming language designed with the GenZ in mind. It’s based on Python, a popular high-level
+programming language known for its readability and simplicity. However, Z# takes a different approach by 
+incorporating modern slang and cultural references into its syntax, making it a fun and engaging way to 
+learn programming.
+
 ## Syntax
 
 * True: `nocap`
