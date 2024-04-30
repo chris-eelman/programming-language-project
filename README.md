@@ -49,23 +49,7 @@ learn programming.
 ## Demo Code
 
 ```
-fortnite a = 7 <3
-dubs b = 5.0 <3
-
-worrrd d = 'our language is:' <3
-rizzler c = 'Z' <3
-
-toSlay function_name (a, b) {
-    bussIf (a sus b) {
-        forReal(fortnite i = 0; i < 10; i++) {
-            <>"Hello there " + i </> <3
-        }
-    } bussElse {
-        <> d + c </> yurrr prints "our language is Z"
-    }
-}
-
-function_name (a , b) 
+yur heres a single line comment <3
 
 yurrr
     multi
@@ -73,8 +57,26 @@ yurrr
     comment
 yurrr
 
-yur heres a single line comment <3
+fortnite a = 7 <3   yur declares an integer
+dubs b = 5.0 <3   yur declares a double
 
+worrrd d = "our language is: " <3   yur declares string
+rizzler c = 'Z' <3   yur declares character
+
+yur use to toSlay to declare a function
+toSlay function_name (a, b) {
+    bussIf (a sus b) {   yur if a is not equal to b then...
+        forReal(fortnite i = 0; i < 10; i++) {
+            <>"Hello there " + i </> <3   yur prints "Hello there [i]", i counting from 0 to 9
+        }
+    } bussElse {
+        <> d + c </>   yur prints "our language is: Z"
+    }
+}
+
+function_name (a , b)   yur calls the function above
+
+yur functions below explained in 'Features' section
 <>a.unoReverse()</> <3
 <>a.getClapped()</> <3
 <>d.slang()</> <3
