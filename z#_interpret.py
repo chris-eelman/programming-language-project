@@ -321,7 +321,7 @@ with open("test.genz", "r") as file:
     input = file.read().replace("\n", " ")
 
 ################################################################
-# Check for Puddle file type, and run on command line
+# Check for Genz file type, and run on command line
 if len(sys.argv) > 1:
     if not sys.argv[1].endswith('.genz'):
         print("Error: The file is not a genZ file.")

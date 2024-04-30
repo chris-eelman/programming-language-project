@@ -129,3 +129,14 @@ COMMENT_BODY ::= [^<3]* '<3' | [^yurrr]* 'yurrr'
 
 BLOCK_COMMENT ::= 'yurrr' COMMENT_BODY 'yurrr'
 ```
+
+## State of the Language
+
+Currently, the Language is capable of doing simple binary operations (+ - * /). The language can split up the input code
+from the genz file into the correct tokens based on our language syntax using regular expressions. The language can also handle variable declarations
+for integers or doubles. The parser handles this an creates the ast tree. 
+
+## Run 
+
+To run a genz file, you can open it in the z#_interpret.py file, OR you can run the z#_interpret file on the command line and 
+pass whatever genz file you want there. 
